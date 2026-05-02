@@ -13,6 +13,8 @@ if (!BASE_URL || !ACCOUNT_NUMBER || !NEW_VALUE) {
   throw new Error('BASE_URL and ACCOUNT_NUMBER and NEW_VALUE required');
 }
 
+console.info('NODE ENV:', process.env.NODE_ENV);
+
 const getElectricityAddress = async (session: GetSessionResult, number: string) => {
   const body = new URLSearchParams();
 
@@ -80,6 +82,12 @@ try {
     console.log('ELECTRICITY SESSION:', session);
 
     const address = await getElectricityAddress(session, ACCOUNT_NUMBER);
+
+    console.log('ELECTRICITY ADDRESS:', address);
+
+    if (process.env.NODE_ENV === 'development') {
+      return;
+    }
 
     if (!address.result) {
       throw new Error(`GAS: checkAddress failed ${JSON.stringify(address)}`);

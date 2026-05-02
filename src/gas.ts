@@ -17,6 +17,8 @@ if (!BASE_URL || !ACCOUNT_NUMBER || !BUILDING_NUMBER || !NEW_VALUE || !OWNER_NAM
   throw new Error('BASE_URL and ACCOUNT_NUMBER and NEW_VALUE and BUILDING_NUMBER and OWNER_NAME required');
 }
 
+console.info('NODE ENV:', process.env.NODE_ENV);
+
 const checkAddress = async (session: GetSessionResult, personal_id: string, building: string) => {
   const body = JSON.stringify({
     personal_id,
@@ -78,6 +80,12 @@ try {
     console.log('GAS SESSION:', session);
 
     const address = await checkAddress(session, ACCOUNT_NUMBER, BUILDING_NUMBER);
+
+    console.log('GAS ADDRESS:', address);
+
+    if (process.env.NODE_ENV === 'development') {
+      return;
+    }
 
     if (address.name !== OWNER_NAME) {
       throw new Error(`GAS: checkAddress failed ${JSON.stringify(address)}`);
