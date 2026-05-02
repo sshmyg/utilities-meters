@@ -1,0 +1,35 @@
+name: Submit gas reading
+
+on:
+  workflow_dispatch:
+    inputs:
+      value:
+        description: New meter reading value
+        required: true
+        type: string
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Submit reading
+        run: node --experimental-strip-types src/gas.ts ${{ inputs.value }}
+        env:
+          NODE_ENV: production
+          GAS_BASE_URL: ${{ secrets.GAS_BASE_URL }}
+          GAS_ACCOUNT_NUMBER: ${{ secrets.GAS_ACCOUNT_NUMBER }}
+          GAS_BUILDING_NUMBER: ${{ secrets.GAS_BUILDING_NUMBER }}
+          GAS_OWNER_NAME: ${{ secrets.GAS_OWNER_NAME }}
