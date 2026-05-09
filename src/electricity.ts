@@ -86,7 +86,7 @@ try {
 
     console.log('ELECTRICITY ADDRESS:', address);
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       return;
     }
 
