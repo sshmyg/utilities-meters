@@ -14,7 +14,18 @@ type Options = {
   gas_owner_name: string;
 };
 
-const options = JSON.parse(readFileSync('/data/options.json', 'utf-8')) as Options;
+console.log('Starting Utilities Meters addon...');
+
+const options = (() => {
+  try {
+    const opts = JSON.parse(readFileSync('/data/options.json', 'utf-8')) as Options;
+    console.log('Options loaded successfully');
+    return opts;
+  } catch (err) {
+    console.error('Failed to read /data/options.json:', err);
+    process.exit(1);
+  }
+})();
 
 const server = createServer((req, res) => {
   const groups = req.url?.match(/^\/submit\/(?<meter>electricity|gas)\/(?<value>.+)$/)?.groups;
