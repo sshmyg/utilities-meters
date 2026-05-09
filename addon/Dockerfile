@@ -5,6 +5,4 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 COPY tsconfig.json server.ts ./
 COPY src/ ./src/
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
-CMD ["/run.sh"]
+CMD ["node", "--experimental-strip-types", "/app/server.ts"]
