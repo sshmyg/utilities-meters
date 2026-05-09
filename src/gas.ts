@@ -18,6 +18,7 @@ if (!BASE_URL || !ACCOUNT_NUMBER || !BUILDING_NUMBER || !NEW_VALUE || !OWNER_NAM
 }
 
 console.info('NODE ENV:', process.env.NODE_ENV);
+console.info('NEW VALUE:', NEW_VALUE);
 
 const checkAddress = async (session: GetSessionResult, personal_id: string, building: string) => {
   const body = JSON.stringify({
@@ -82,6 +83,8 @@ try {
     const address = await checkAddress(session, ACCOUNT_NUMBER, BUILDING_NUMBER);
 
     console.log('GAS ADDRESS:', address);
+
+    return;
 
     if (process.env.NODE_ENV === 'development') {
       return;

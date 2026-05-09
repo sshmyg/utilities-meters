@@ -14,6 +14,7 @@ if (!BASE_URL || !ACCOUNT_NUMBER || !NEW_VALUE) {
 }
 
 console.info('NODE ENV:', process.env.NODE_ENV);
+console.info('NEW VALUE:', NEW_VALUE);
 
 const getElectricityAddress = async (session: GetSessionResult, number: string) => {
   const body = new URLSearchParams();
@@ -84,6 +85,8 @@ try {
     const address = await getElectricityAddress(session, ACCOUNT_NUMBER);
 
     console.log('ELECTRICITY ADDRESS:', address);
+
+    return;
 
     if (process.env.NODE_ENV === 'development') {
       return;

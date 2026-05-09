@@ -6,7 +6,7 @@
 curl -X POST \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Accept: application/vnd.github+json" \
-  https://api.github.com/repos/<owner>/utilities-meters/actions/workflows/submit-electricity.yml/dispatches \
+  https://api.github.com/repos/sshmyg/utilities-meters/actions/workflows/submit-electricity.yml/dispatches \
   -d '{"ref":"main","inputs":{"value":"12345"}}'
 ```
 
@@ -16,6 +16,6 @@ curl -X POST \
 curl -X POST \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Accept: application/vnd.github+json" \
-  https://api.github.com/repos/<owner>/utilities-meters/actions/workflows/submit-gas.yml/dispatches \
+  https://api.github.com/repos/sshmyg/utilities-meters/actions/workflows/submit-gas.yml/dispatches \
   -d '{"ref":"main","inputs":{"value":"6789"}}'
 ```

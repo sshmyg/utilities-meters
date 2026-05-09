@@ -28,7 +28,7 @@ jobs:
       - name: Submit reading
         run: node --experimental-strip-types src/gas.ts ${{ inputs.value }}
         env:
-          NODE_ENV: production
+          NODE_ENV: development
           GAS_BASE_URL: ${{ secrets.GAS_BASE_URL }}
           GAS_ACCOUNT_NUMBER: ${{ secrets.GAS_ACCOUNT_NUMBER }}
           GAS_BUILDING_NUMBER: ${{ secrets.GAS_BUILDING_NUMBER }}

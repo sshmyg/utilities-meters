@@ -28,6 +28,6 @@ jobs:
       - name: Submit reading
         run: node --experimental-strip-types src/electricity.ts ${{ inputs.value }}
         env:
-          NODE_ENV: production
+          NODE_ENV: development
           ELECTRICITY_BASE_URL: ${{ secrets.ELECTRICITY_BASE_URL }}
           ELECTRICITY_ACCOUNT_NUMBER: ${{ secrets.ELECTRICITY_ACCOUNT_NUMBER }}
