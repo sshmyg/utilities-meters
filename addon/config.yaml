@@ -1,22 +1,22 @@
-name: "Utilities Meters"
-description: "Submit electricity and gas meter readings"
-version: "1.0.1"
-slug: "utilities_meters"
+name: 'Utilities Meters'
+description: 'Submit electricity and gas meter readings'
+version: '1.0.2'
+slug: 'utilities_meters'
 init: false
 arch:
   - aarch64
   - amd64
 host_network: true
 options:
-  node_env: "development"
-  electricity_base_url: ""
-  electricity_account_number: ""
-  gas_base_url: ""
-  gas_account_number: ""
-  gas_building_number: ""
-  gas_owner_name: ""
+  node_env: 'development'
+  electricity_base_url: ''
+  electricity_account_number: ''
+  gas_base_url: ''
+  gas_account_number: ''
+  gas_building_number: ''
+  gas_owner_name: ''
 schema:
-  node_env: "list(development|production)"
+  node_env: 'list(development|production)'
   electricity_base_url: str?
   electricity_account_number: str?
   gas_base_url: str?

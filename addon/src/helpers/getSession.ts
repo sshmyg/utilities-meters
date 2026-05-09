@@ -11,7 +11,7 @@ export const getSession = async (url: string) => {
   const cookie = cookies.map((c) => c.split(';')[0]).join('; ');
 
   console.log('SESSION cookies:', cookies);
-  console.log('SESSION html snippet:', html.slice(0, 500));
+  console.log('SESSION html snippet:', html.slice(4300, 4500));
 
   const csrfMatch =
     html.match(/<meta name="csrf-token" content="([^"]+)"/) || html.match(/name="csrf-token"\s+content="([^"]+)"/);
