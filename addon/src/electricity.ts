@@ -13,6 +13,7 @@ if (!BASE_URL || !ACCOUNT_NUMBER || !NEW_VALUE) {
   throw new Error('BASE_URL and ACCOUNT_NUMBER and NEW_VALUE required');
 }
 
+console.info('────────────────────── ELECTRICITY ──────────────────────');
 console.info('NODE ENV:', process.env.NODE_ENV);
 console.info('NEW VALUE:', NEW_VALUE);
 
@@ -59,7 +60,7 @@ const sendValue = async (session: GetSessionResult, address: ElectricityAddress,
     }),
   );
 
-  const res = await fetch(REQUEST_URL, {
+  const request = await fetch(REQUEST_URL, {
     method: 'POST',
     headers: {
       'x-csrf-token': session.csrfToken,
@@ -70,32 +71,37 @@ const sendValue = async (session: GetSessionResult, address: ElectricityAddress,
     body: formData,
   });
 
-  const text = await res.text();
+  if (!request.ok) {
+    throw new Error(`Send value error, status: ${request.status}`);
+  }
 
-  console.log('ELECTRICITY SAVE STATUS', res.ok, res.status);
+  console.log('ELECTRICITY SAVE STATUS', request.ok, request.status);
+  console.log('ELECTRICITY SAVE CONTENT-TYPE:', request.headers.get('content-type'));
+
+  const text = await request.text();
+
   console.log('ELECTRICITY SAVE RESPONSE:', text);
 };
 
-try {
-  (async () => {
-    const session = await getSession(METER_PAGE_URL);
+(async () => {
+  const session = await getSession(METER_PAGE_URL);
 
-    console.log('ELECTRICITY SESSION:', session);
+  console.log('ELECTRICITY SESSION:', session);
 
-    const address = await getElectricityAddress(session, ACCOUNT_NUMBER);
+  const address = await getElectricityAddress(session, ACCOUNT_NUMBER);
 
-    console.log('ELECTRICITY ADDRESS:', address);
+  console.log('ELECTRICITY ADDRESS:', address);
 
-    if (process.env.NODE_ENV !== 'production') {
-      return;
-    }
+  if (process.env.NODE_ENV !== 'production') {
+    return;
+  }
 
-    if (!address.result) {
-      throw new Error(`GAS: checkAddress failed ${JSON.stringify(address)}`);
-    }
+  if (!address.result) {
+    throw new Error(`ELECTRICITY: checkAddress failed ${JSON.stringify(address)}`);
+  }
 
-    await sendValue(session, address, NEW_VALUE);
-  })();
-} catch (error) {
+  await sendValue(session, address, NEW_VALUE);
+})().catch((error) => {
   console.error(error);
-}
+  process.exit(1);
+});

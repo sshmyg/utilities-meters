@@ -17,6 +17,7 @@ if (!BASE_URL || !ACCOUNT_NUMBER || !BUILDING_NUMBER || !NEW_VALUE || !OWNER_NAM
   throw new Error('BASE_URL and ACCOUNT_NUMBER and NEW_VALUE and BUILDING_NUMBER and OWNER_NAME required');
 }
 
+console.info('───────────────────────────── GAS ─────────────────────────────');
 console.info('NODE ENV:', process.env.NODE_ENV);
 console.info('NEW VALUE:', NEW_VALUE);
 
@@ -69,31 +70,33 @@ const sendValue = async (session: GetSessionResult, newValue: string, personal_i
     throw new Error(`Send value error, status: ${request.status}`);
   }
 
-  const response = await request.json();
+  console.log('GAS SAVE STATUS', request.ok, request.status);
+  console.log('GAS SAVE CONTENT-TYPE:', request.headers.get('content-type'));
+
+  const response = await request.text();
 
   console.log('GAS SAVE RESPONSE:', response);
 };
 
-try {
-  (async () => {
-    const session = await getSession(METER_PAGE_URL);
+(async () => {
+  const session = await getSession(METER_PAGE_URL);
 
-    console.log('GAS SESSION:', session);
+  console.log('GAS SESSION:', session);
 
-    const address = await checkAddress(session, ACCOUNT_NUMBER, BUILDING_NUMBER);
+  const address = await checkAddress(session, ACCOUNT_NUMBER, BUILDING_NUMBER);
 
-    console.log('GAS ADDRESS:', address);
+  console.log('GAS ADDRESS:', address);
 
-    if (process.env.NODE_ENV !== 'production') {
-      return;
-    }
+  if (process.env.NODE_ENV !== 'production') {
+    return;
+  }
 
-    if (address.name !== OWNER_NAME) {
-      throw new Error(`GAS: checkAddress failed ${JSON.stringify(address)}`);
-    }
+  if (address.name !== OWNER_NAME) {
+    throw new Error(`GAS: checkAddress failed ${JSON.stringify(address)}`);
+  }
 
-    await sendValue(session, NEW_VALUE, ACCOUNT_NUMBER);
-  })();
-} catch (error) {
+  await sendValue(session, NEW_VALUE, ACCOUNT_NUMBER);
+})().catch((error) => {
   console.error(error);
-}
+  process.exit(1);
+});

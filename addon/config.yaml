@@ -1,6 +1,6 @@
 name: 'Utilities Meters'
 description: 'Submit electricity and gas meter readings'
-version: '1.0.2'
+version: '1.0.3'
 slug: 'utilities_meters'
 init: false
 arch:
