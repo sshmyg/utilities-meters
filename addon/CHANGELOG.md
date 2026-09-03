@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- Added an add-on icon (`icon.png`, 128x128).
+
 ## 1.1.1
 
 - Fixed the Docker build failing on rebuild (`Cannot verify the identity of the @pnpm/exe.linux-arm64 native binary`) by pinning the pnpm version installed in the `Dockerfile` to `10.33.2`, matching the version already declared in `package.json` (`packageManager`). The previous unpinned `npm install -g pnpm` picked up a newer pnpm release that added a native-binary integrity check not satisfied by the existing lockfile.
