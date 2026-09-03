@@ -1,5 +1,5 @@
 FROM node:26-alpine
-RUN apk upgrade --no-cache && npm install -g pnpm
+RUN apk upgrade --no-cache && npm install -g pnpm@10.33.2
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
