@@ -12,6 +12,7 @@ type Options = {
   gas_account_number: string;
   gas_building_number: string;
   gas_owner_name: string;
+  gas_captcha_api_key: string;
 };
 
 console.log('Starting Utilities Meters addon...');
@@ -51,6 +52,7 @@ const server = createServer((req, res) => {
           GAS_ACCOUNT_NUMBER: options.gas_account_number,
           GAS_BUILDING_NUMBER: options.gas_building_number,
           GAS_OWNER_NAME: options.gas_owner_name,
+          GAS_CAPTCHA_API_KEY: options.gas_captcha_api_key,
         }),
   };
 

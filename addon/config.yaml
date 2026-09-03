@@ -1,6 +1,6 @@
 name: 'Utilities Meters'
 description: 'Submit electricity and gas meter readings'
-version: '1.0.3'
+version: '1.1.0'
 slug: 'utilities_meters'
 init: false
 arch:
@@ -15,6 +15,7 @@ options:
   gas_account_number: ''
   gas_building_number: ''
   gas_owner_name: ''
+  gas_captcha_api_key: ''
 schema:
   node_env: 'list(development|production)'
   electricity_base_url: str?
@@ -23,3 +24,4 @@ schema:
   gas_account_number: str?
   gas_building_number: str?
   gas_owner_name: str?
+  gas_captcha_api_key: str?
